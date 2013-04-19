@@ -12,13 +12,12 @@ public class ShortestRemainingTimeNext extends SchedulingAlgorithm {
 			return null;
 		}
 		Process.arrangeWithArrivalTimes(processes);
+		
 		int totalRuntime = 0;
-		for (int i = 0; i < processes.size(); i++) {
-			totalRuntime += processes.get(i).getRunTime();
-		}
 		Process[] timeSlots = new Process[totalRuntime];
 		ArrayList<Process> tmp = new ArrayList<Process>(processes.size());
 		for (int i = 0; i < processes.size(); i++) {
+			totalRuntime += processes.get(i).getRunTime();
 			tmp.add(processes.get(i).clone());
 		}
 
