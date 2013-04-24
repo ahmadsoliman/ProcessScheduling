@@ -9,6 +9,14 @@ import Components.User;
 
 public class Lottery extends SchedulingAlgorithm {
 
+	public Lottery() {
+		super();
+	}
+
+	public Lottery(ArrayList<Process> processes, ArrayList<User> users) {
+		super(processes, users);
+	}
+
 	public Process[] simulate() {
 		if (processes.size() == 0) {
 			// System.out.println("No processes to simulate!");
@@ -39,6 +47,10 @@ public class Lottery extends SchedulingAlgorithm {
 			Process p = tickets.get(r).getProcess();
 			timeSlots[curTime++] = p;
 			p.setRunTime(p.getRunTime()-1);
+			if(p.getRunTime()>0){
+				timeSlots[curTime++] = p;
+				p.setRunTime(p.getRunTime()-1);
+			}
 			if(p.getRunTime()==0){
 				for (int i = 0; i < tickets.size(); i++) {
 					if(tickets.get(i).getProcess().equals(p))

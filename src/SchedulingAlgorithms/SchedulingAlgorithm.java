@@ -30,4 +30,20 @@ public abstract class SchedulingAlgorithm {
 
 	public abstract Process[] simulate();
 
+	public ArrayList<Process> getProcesses() {
+		return processes;
+	}
+
+	public void setProcesses(ArrayList<Process> processes) {
+		this.processes = processes;
+	}
+
+	public ArrayList<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(ArrayList<User> users) {
+		this.users = users;
+	}
+
 }

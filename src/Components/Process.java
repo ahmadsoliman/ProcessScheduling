@@ -6,11 +6,11 @@ import java.util.Comparator;
 
 public class Process {
 	private String processName;
-	private long arrivalTime;
-	private long runTime;
+	private int arrivalTime;
+	private int runTime;
 	private String userName;
 
-	public Process(String processName, long arrivalTime, long runTime,
+	public Process(String processName, int arrivalTime, int runTime,
 			String userName) {
 		super();
 		this.processName = processName;
@@ -27,19 +27,19 @@ public class Process {
 		this.processName = processName;
 	}
 
-	public long getArrivalTime() {
+	public int getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(long arrivalTime) {
+	public void setArrivalTime(int arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 
-	public long getRunTime() {
+	public int getRunTime() {
 		return runTime;
 	}
 
-	public void setRunTime(long runTime) {
+	public void setRunTime(int runTime) {
 		this.runTime = runTime;
 	}
 

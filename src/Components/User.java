@@ -1,6 +1,7 @@
 package Components;
 
 public class User {
+	private int index;
 	private String userName;
 	private int priority;
 
@@ -24,6 +25,14 @@ public class User {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+	
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
 	public boolean equals(Object obj) {
