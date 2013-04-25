@@ -1,16 +1,19 @@
 package SchedulingAlgorithms;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import Components.Process;
+import Components.Ticket;
 import Components.User;
 
 public class FairShare extends SchedulingAlgorithm {
-	
+
 	public FairShare() {
 		super();
 	}
-	
+
 	public FairShare(ArrayList<Process> processes, ArrayList<User> users) {
 		super(processes, users);
 	}
@@ -37,17 +40,44 @@ public class FairShare extends SchedulingAlgorithm {
 			totalRuntime += processes.get(i).getRunTime();
 			tmpProcesses.add(processes.get(i).clone());
 			tmpUsr = getUserByName(tmpProcesses.get(i).getUserName());
-			totalPriority += tmpUsr.getPriority();
-			userProcesses[tmpUsr.getIndex()].add(processes.get(i));
 		}
 
 		Process[] timeSlots = new Process[totalRuntime];
 		int[] lpu = new int[users.size()];// latest process per user
 
-		int i = 0;
-		while (i < timeSlots.length) {
+		Queue<Process> queue = new LinkedList<Process>();
+
+		int i = 0, recentProcess = -1;
+
+
+		while (i < totalRuntime) {
+			if (recentProcess < tmpProcesses.size() - 1
+					&& tmpProcesses.get(recentProcess + 1).getArrivalTime() <= i) {
+				recentProcess++;
+				tmpUsr = getUserByName(tmpProcesses.get(recentProcess)
+						.getUserName());
+				userProcesses[tmpUsr.getIndex()].add(tmpProcesses
+						.get(recentProcess));
+
+			}
+			
+		}
+		
+		while (i < totalRuntime) {
+			if (recentProcess < tmpProcesses.size() - 1
+					&& tmpProcesses.get(recentProcess + 1).getArrivalTime() <= i) {
+				recentProcess++;
+				tmpUsr = getUserByName(tmpProcesses.get(recentProcess)
+						.getUserName());
+				userProcesses[tmpUsr.getIndex()].add(tmpProcesses
+						.get(recentProcess));
+
+			}
 			for (int j = 0; j < users.size(); j++) {
 				for (int j2 = 0; j2 < users.get(j).getPriority(); j2++) {
+					if (userProcesses[users.get(j).getIndex()].size() == 0)
+						continue;
+					int start = lpu[users.get(j).getIndex()];
 					Process tmpProcess = null;
 					while (tmpProcess == null || tmpProcess.getRunTime() == 0) {
 						tmpProcess = userProcesses[users.get(j).getIndex()]
@@ -55,16 +85,22 @@ public class FairShare extends SchedulingAlgorithm {
 						lpu[users.get(j).getIndex()] = (lpu[users.get(j)
 								.getIndex()] + 1)
 								% userProcesses[users.get(j).getIndex()].size();
+						if (lpu[users.get(j).getIndex()] == start) {
+							tmpProcess = null;
+							break;
+						}
 					}
+					if (tmpProcess == null)
+						break;
 
 					timeSlots[i++] = tmpProcess;
 					tmpProcess.setRunTime(tmpProcess.getRunTime() - 1);
-					j2++;
+					// j2++;
 					if (tmpProcess.getRunTime() > 0) {
 						timeSlots[i++] = tmpProcess;
 						tmpProcess.setRunTime(tmpProcess.getRunTime() - 1);
 					} else {
-						j2--;
+						// j2--;
 					}
 					if (tmpProcess.getRunTime() == 0) {
 						// userProcesses[users.get(j).getIndex()].remove(tmpProcess);

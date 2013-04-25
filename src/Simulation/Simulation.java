@@ -89,7 +89,7 @@ public class Simulation {
 		case 2:
 			simulateLottery(users, processes);
 			break;
-		case 6:
+		case 3:
 			simulateFairShare(users, processes);
 			break;
 		default:
@@ -97,48 +97,32 @@ public class Simulation {
 		}
 	}
 
-	private static void simulateFairShare(ArrayList<User> users,
+	public static void simulateFairShare(ArrayList<User> users,
 			ArrayList<Process> processes) {
 		FairShare sim = new FairShare(processes, users);
 
 		System.out.println("Simulating..\n");
-		Process[] timeSlots = sim.simulate();
-
-		System.out.println(" Time Slot        User Name        Process Name ");
-		System.out.println("------------------------------------------------");
-		for (int i = 0; i < timeSlots.length; i++) {
-			if (timeSlots[i] != null)
-				System.out.println("  " + i + "          "
-						+ timeSlots[i].getUserName() + "        "
-						+ timeSlots[i].getProcessName());
-		}
+		printSim(sim.simulate());
 	}
 
-	private static void simulateLottery(ArrayList<User> users,
+	public static void simulateLottery(ArrayList<User> users,
 			ArrayList<Process> processes) {
 		Lottery sim = new Lottery(processes, users);
 
 		System.out.println("Simulating..\n");
-		Process[] timeSlots = sim.simulate();
-
-		System.out.println(" Time Slot        User Name        Process Name ");
-		System.out.println("------------------------------------------------");
-		for (int i = 0; i < timeSlots.length; i++) {
-			if (timeSlots[i] != null)
-				System.out.println("  " + i + "          "
-						+ timeSlots[i].getUserName() + "        "
-						+ timeSlots[i].getProcessName());
-		}
+		printSim(sim.simulate());
 	}
 
-	private static void simulateShortest(ArrayList<User> users,
+	public static void simulateShortest(ArrayList<User> users,
 			ArrayList<Process> processes) {
 		ShortestRemainingTimeNext sim = new ShortestRemainingTimeNext(
 				processes, users);
 
 		System.out.println("Simulating..\n");
-		Process[] timeSlots = sim.simulate();
+		printSim(sim.simulate());
+	}
 
+	public static void printSim(Process[] timeSlots) {
 		System.out.println(" Time Slot    User Name    Process Name ");
 		System.out.println("----------------------------------------");
 		for (int i = 0; i < timeSlots.length; i++) {
@@ -148,5 +132,4 @@ public class Simulation {
 						+ timeSlots[i].getProcessName());
 		}
 	}
-
 }
