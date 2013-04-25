@@ -4,6 +4,7 @@ public class User {
 	private int index;
 	private String userName;
 	private int priority;
+	private int tmpPriority;
 
 	public User(String userName, int priority) {
 		super();
@@ -39,4 +40,13 @@ public class User {
 		return (obj instanceof User && ((User) obj).getUserName().equals(
 				getUserName()));
 	}
+
+	public int getTmpPriority() {
+		return tmpPriority;
+	}
+
+	public void setTmpPriority(int tmpPriority) {
+		this.tmpPriority = tmpPriority;
+	}
+
 }
